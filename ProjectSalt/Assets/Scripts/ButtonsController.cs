@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ButtonsController : MonoBehaviour {
 
     // Use this for initialization
-    GameObject currentSelectedButton;
+    public GameObject currentSelectedButton;
 
 	void Start () {
 		
