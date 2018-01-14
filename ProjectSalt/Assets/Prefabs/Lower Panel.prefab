@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 222982639392178392}
   - component: {fileID: 114144755337965652}
   m_Layer: 5
-  m_Name: Lower Panel
+  m_Name: Plant Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -382,6 +382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e87bdfefe3cb8dc4199a8950bf9dff52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentSelectedButton: {fileID: 0}
 --- !u!114 &114796099308165412
 MonoBehaviour:
   m_ObjectHideFlags: 1

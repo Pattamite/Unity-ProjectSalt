@@ -52,8 +52,10 @@ public class FarmSlot : MonoBehaviour {
     }
 
     public void PlantGrowth () {
-        currentState++;
-        UpdateText();
+        if (hasPlant) {
+            currentState++;
+            UpdateText();
+        }
     }
 
     private void UpdateText () {
