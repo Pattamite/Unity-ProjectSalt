@@ -25,7 +25,7 @@ public class FarmSlot : MonoBehaviour {
 	}
 
     public void OnClick () {
-        if (plantButtonsController.currentSelectedButton) {
+        if (plantButtonsController.GetIsActive() && plantButtonsController.currentSelectedButton) {
             AddPlant(plantButtonsController.currentSelectedButton);
         }
     }
