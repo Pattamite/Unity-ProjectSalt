@@ -15,7 +15,6 @@ public class FarmSlot : MonoBehaviour {
 	void Start () {
         plantButtonsController = GameObject.FindObjectOfType<PlantButtonsController>();
         text = GetComponentInChildren<Text>();
-
         UpdateText();
     }
 	
@@ -25,8 +24,8 @@ public class FarmSlot : MonoBehaviour {
 	}
 
     public void OnClick () {
-        if (plantButtonsController.GetIsActive() && plantButtonsController.currentSelectedButton) {
-            AddPlant(plantButtonsController.currentSelectedButton);
+        if (PlantButtonsController.currentSelectedButton) {
+            AddPlant(PlantButtonsController.currentSelectedButton);
         }
     }
 
