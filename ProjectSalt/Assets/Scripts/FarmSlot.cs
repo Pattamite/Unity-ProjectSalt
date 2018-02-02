@@ -5,18 +5,20 @@ using UnityEngine.UI;
 
 public class FarmSlot : MonoBehaviour {
 
-    static private Color defaultColor = Color.white;
+    static private Color hasPlantColor = Color.white;
+    static private Color dontHasPlantColor = new Color(0, 0, 0, 0);
     private bool isRotten;
     private int currentState = 0;
     private int currentDayPass = 0;
     private PlantButtonsController plantButtonsController;
+    private ToolsButtonController toolsButtonController;
     private Text text;
     private string plantImageName = "PlantImage";
     private Image plantImage;
     private PlantModel plantModel;
 
     // Use this for initialization
-    void Awake (){
+    void Awake () {
         if (transform.Find(plantImageName)) {
             plantImage = transform.Find(plantImageName).GetComponent<Image>();
         }
@@ -27,22 +29,32 @@ public class FarmSlot : MonoBehaviour {
 
     void Start () {
         plantButtonsController = GameObject.FindObjectOfType<PlantButtonsController>();
+        toolsButtonController = GameObject.FindObjectOfType<ToolsButtonController>();
         text = GetComponentInChildren<Text>();
         UpdatePlant();
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    // Update is called once per frame
+    void Update () {
+
+    }
 
     public void OnClick () {
-        if (PlantButtonsController.currentSelectedButton) {
-            PlantModel plant = PlantButtonsController.currentSelectedButton.GetComponent<PlantModel>();
-            if (plant) {
-                AddPlant(plant);
-            }
-                
+
+        if (PlantButtonsController.GetPlantModel()) {
+            AddPlant(PlantButtonsController.GetPlantModel());
+        }
+        else if (ToolsButtonController.GetCommand() != null) {
+            Command(ToolsButtonController.GetCommand());
+        }
+    }
+
+    private void Command (string command) {
+        if (command == ToolsButtonController.COMMAND_REMOVE) {
+            RemovePlant();
+        }
+        else {
+            Debug.LogWarning("FarmSlot.Command : Unknown Command -> " + command);
         }
     }
 
@@ -61,6 +73,7 @@ public class FarmSlot : MonoBehaviour {
     }
 
     public void RemovePlant () {
+        print("remove");
         plantModel = null;
         currentState = 0;
         currentDayPass = 0;
@@ -93,16 +106,19 @@ public class FarmSlot : MonoBehaviour {
                 else {
                     plantImage.sprite = plantModel.stateImage[currentState];
                 }
-                
+
             }
             else {
                 plantImage.sprite = plantModel.rottenImage;
-            }   
+            }
 
+            plantImage.color = hasPlantColor;
             text.text = currentDayPass.ToString(); //for testing Only
         }
         else {
             text.text = " "; //for testing Only
+            plantImage.sprite = null;
+            plantImage.color = dontHasPlantColor;
         }
     }
 }
