@@ -13,9 +13,11 @@ public class Farm : MonoBehaviour {
     private Vector2 activePosition;
     private Vector2 notActivePosition = new Vector2(-1000, 0);
     public int currentActiveSubFarmIndex { get; private set; }
+    private UIController uiController;
     // Use this for initialization
     void Start () {
         subFarms = new GameObject[transform.childCount];
+        uiController = GameObject.FindObjectOfType<UIController>();
         checkSubFarmCount();
 
         currentActiveSubFarmIndex = 0;
@@ -66,6 +68,7 @@ public class Farm : MonoBehaviour {
         }
 
         CheckLeftRightButton();
+        uiController.UpdateFarmText();
     }
 
     private void CheckLeftRightButton () {

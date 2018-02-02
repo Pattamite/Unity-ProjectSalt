@@ -12,6 +12,7 @@ public class FarmSlot : MonoBehaviour {
     private int currentDayPass = 0;
     private PlantButtonsController plantButtonsController;
     private ToolsButtonController toolsButtonController;
+    private MainGameController mainGameController;
     private Text text;
     private string plantImageName = "PlantImage";
     private Image plantImage;
@@ -30,6 +31,7 @@ public class FarmSlot : MonoBehaviour {
     void Start () {
         plantButtonsController = GameObject.FindObjectOfType<PlantButtonsController>();
         toolsButtonController = GameObject.FindObjectOfType<ToolsButtonController>();
+        mainGameController = GameObject.FindObjectOfType<MainGameController>();
         text = GetComponentInChildren<Text>();
         UpdatePlant();
     }
@@ -42,7 +44,7 @@ public class FarmSlot : MonoBehaviour {
     public void OnClick () {
 
         if (PlantButtonsController.GetPlantModel()) {
-            AddPlant(PlantButtonsController.GetPlantModel());
+            BuyPlant(PlantButtonsController.GetPlantModel());
         }
         else if (ToolsButtonController.GetCommand() != null) {
             Command(ToolsButtonController.GetCommand());
@@ -53,8 +55,21 @@ public class FarmSlot : MonoBehaviour {
         if (command == ToolsButtonController.COMMAND_REMOVE) {
             RemovePlant();
         }
+        else if (command == ToolsButtonController.COMMAND_HARVEST) {
+            HarvestPlant();
+        }
         else {
             Debug.LogWarning("FarmSlot.Command : Unknown Command -> " + command);
+        }
+    }
+
+    public void BuyPlant (PlantModel plant) {
+        if(mainGameController.currentMoney >= plant.buyPrice) {
+            mainGameController.reduceMoney(plant.buyPrice);
+            AddPlant(plant);
+        }
+        else {
+            Debug.LogWarning("Not Enough Money.");
         }
     }
 
@@ -70,6 +85,13 @@ public class FarmSlot : MonoBehaviour {
             isRotten = false;
         }
         UpdatePlant();
+    }
+
+    public void HarvestPlant () {
+        if (currentState == (plantModel.stateCount - 1) && !isRotten) {
+            mainGameController.addMoney(plantModel.GetSellPrice());
+            RemovePlant();
+        }
     }
 
     public void RemovePlant () {

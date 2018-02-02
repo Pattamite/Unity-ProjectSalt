@@ -46,6 +46,10 @@ public class PlantModel : MonoBehaviour {
         }
     }
 
+    public int GetSellPrice () {
+        return sellPrice + UnityEngine.Random.Range(0, sellPriceRandomRange + 1);
+    }
+
 
     // Use this for initialization
     void Start () {
