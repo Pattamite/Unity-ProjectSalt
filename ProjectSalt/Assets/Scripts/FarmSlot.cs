@@ -6,16 +6,24 @@ using UnityEngine.UI;
 public class FarmSlot : MonoBehaviour {
 
     static private Color defaultColor = Color.white;
-    private bool hasPlant = false;
+    private bool isRotten;
     private int currentState = 0;
+    private int currentDayPass = 0;
     private PlantButtonsController plantButtonsController;
     private Text text;
+    private string plantImageName = "PlantImage";
+    private Image plantImage;
+    private PlantModel plantModel;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Awake (){
+        plantImage = transform.Find(plantImageName).GetComponent<Image>();
+    }
+
+    void Start () {
         plantButtonsController = GameObject.FindObjectOfType<PlantButtonsController>();
         text = GetComponentInChildren<Text>();
-        UpdateText();
+        UpdatePlant();
     }
 	
 	// Update is called once per frame
@@ -25,44 +33,71 @@ public class FarmSlot : MonoBehaviour {
 
     public void OnClick () {
         if (PlantButtonsController.currentSelectedButton) {
-            AddPlant(PlantButtonsController.currentSelectedButton);
+            PlantModel plant = PlantButtonsController.currentSelectedButton.GetComponent<PlantModel>();
+            if (plant) {
+                AddPlant(plant);
+            }
+                
         }
     }
 
 
-    private void AddPlant (GameObject plant) {
-        Color plantColor = plant.GetComponent<Image>().color;
-
-        if (hasPlant) {
+    private void AddPlant (PlantModel plant) {
+        if (plantModel) {
             Debug.Log("This slot already has plant.");
         }
         else {
-            gameObject.GetComponent<Image>().color = new Color(plantColor.r, plantColor.g, plantColor.b, 1f); ;
-            hasPlant = true;
+            plantModel = plant;
+            currentState = 0;
+            currentDayPass = 0;
+            isRotten = false;
         }
-        UpdateText();
+        UpdatePlant();
     }
 
     public void RemovePlant () {
-        gameObject.GetComponent<Image>().color = defaultColor;
+        plantModel = null;
         currentState = 0;
-        hasPlant = false;
-        UpdateText();
+        currentDayPass = 0;
+        isRotten = false;
+        UpdatePlant();
     }
 
-    public void PlantGrowth () {
-        if (hasPlant) {
-            currentState++;
-            UpdateText();
+    public void PlantGrowth (int dayPass) {
+        if (plantModel) {
+            currentDayPass += dayPass;
+            UpdatePlant();
         }
     }
 
-    private void UpdateText () {
-        if (hasPlant) {
-            text.text = currentState.ToString();
+    private void UpdatePlant () {
+        if (plantModel) {
+            if (!isRotten) {
+                while (currentDayPass >= plantModel.daysToNextState[currentState] && currentDayPass >= 0) {
+                    currentDayPass -= plantModel.daysToNextState[currentState];
+                    currentState++;
+                    if (currentState >= plantModel.stateCount) {
+                        break;
+                    }
+                }
+
+                if (currentState >= plantModel.stateCount) {
+                    isRotten = true;
+                    plantImage.sprite = plantModel.rottenImage;
+                }
+                else {
+                    plantImage.sprite = plantModel.stateImage[currentState];
+                }
+                
+            }
+            else {
+                plantImage.sprite = plantModel.rottenImage;
+            }   
+
+            text.text = currentDayPass.ToString(); //for testing Only
         }
         else {
-            text.text = " ";
+            text.text = " "; //for testing Only
         }
     }
 }

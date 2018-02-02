@@ -38,10 +38,10 @@ public class Farm : MonoBehaviour {
 		
 	}
 
-    public void NextDay () {
+    public void NextDay (int dayPass) {
         foreach (Transform miniFarm in transform) {
             if (miniFarm.gameObject.GetComponent<SubFarm>()) {
-                miniFarm.gameObject.GetComponent<SubFarm>().NextDay();
+                miniFarm.gameObject.GetComponent<SubFarm>().NextDay(dayPass);
             }
         }
     }
