@@ -19,9 +19,22 @@ public class PlantModel : MonoBehaviour {
     public int sellPrice;
     public int sellPriceRandomRange;
 
+    private string plantImageName = "PlantButtonImage";
+    private Image plantImage;
+
+    void Awake () {
+        if(transform.Find(plantImageName)) {
+            plantImage = transform.Find(plantImageName).GetComponent<Image>();
+            plantImage.sprite = stateImage[stateCount - 1];
+        }
+        else {
+            Debug.LogWarning("PlantModel.Awake : Child '" + plantImageName + "' not found");
+        }
+    }
+
     private void OnValidate () {
-        if (stateCount < 0){
-            stateCount = 0;
+        if (stateCount < 1){
+            stateCount = 1;
         }
 
         if (daysToNextState.Length != stateCount){

@@ -2,6 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlantButtonsController : ButtonsPanelController {
-    
+public class ToolsButtonController : ButtonsPanelController {
+
 }

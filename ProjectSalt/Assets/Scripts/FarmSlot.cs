@@ -17,7 +17,12 @@ public class FarmSlot : MonoBehaviour {
 
     // Use this for initialization
     void Awake (){
-        plantImage = transform.Find(plantImageName).GetComponent<Image>();
+        if (transform.Find(plantImageName)) {
+            plantImage = transform.Find(plantImageName).GetComponent<Image>();
+        }
+        else {
+            Debug.LogWarning("FarmSlot.Awake : Child '" + plantImageName + "' not found");
+        }
     }
 
     void Start () {
