@@ -29,7 +29,7 @@ public class PlantModel : MonoBehaviour {
     void Awake () {
         if(transform.Find(plantImageName)) {
             plantImage = transform.Find(plantImageName).GetComponent<Image>();
-            plantImage.sprite = stateImage[stateCount - 1];
+            //plantImage.sprite = stateImage[stateCount - 1];
         }
         else {
             Debug.LogWarning("PlantModel.Awake : Child '" + plantImageName + "' not found");

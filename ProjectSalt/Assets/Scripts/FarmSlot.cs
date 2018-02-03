@@ -86,7 +86,7 @@ public class FarmSlot : MonoBehaviour {
     }
 
     public void BuyPlant (PlantModel plant) {
-        if(mainGameController.currentMoney >= plant.buyPrice) {
+        if(mainGameController.currentMoney >= plant.buyPrice && !plantModel) {
             mainGameController.ReduceMoney(plant.buyPrice);
             AddPlant(plant);
             audioSource.clip = plantSound;
@@ -123,17 +123,17 @@ public class FarmSlot : MonoBehaviour {
     }
 
     public void RemovePlant (bool isPlaySound) {
+        if (isPlaySound && plantModel) {
+            audioSource.clip = removeSound;
+            if (AudioController.IsAudioEnable()) audioSource.Play();
+        }
+
         plantModel = null;
         currentState = 0;
         currentDayPass = 0;
         isRotten = false;
         UpdatePlant();
         saveLoadController.SaveFarmSlots();
-
-        if (isPlaySound) {
-            audioSource.clip = removeSound;
-            if(AudioController.IsAudioEnable()) audioSource.Play();
-        }
     }
 
     public void PlantGrowth (int dayPass) {
