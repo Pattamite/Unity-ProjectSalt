@@ -14,11 +14,13 @@ public class MainGameController : MonoBehaviour {
     private bool isTodayGrowth;
     private UIController uiController;
     private DateTime temp;
+    private SaveLoadController saveLoadController;
 
 	// Use this for initialization
 	void Start () {
         farm = GameObject.FindObjectOfType<Farm>();
         uiController = GameObject.FindObjectOfType<UIController>();
+        saveLoadController = GameObject.FindObjectOfType<SaveLoadController>();
         isTodayGrowth = false;
         currentMoney = 100;
         temp = DateTime.Now;
@@ -34,6 +36,7 @@ public class MainGameController : MonoBehaviour {
     public void AddMoney (int value) {
         currentMoney += value;
         uiController.UpdateMoneyText();
+        saveLoadController.SaveMainData();
     }
 
     public void ReduceMoney (int value) {
@@ -42,6 +45,7 @@ public class MainGameController : MonoBehaviour {
             currentMoney = 0;
         }
         uiController.UpdateMoneyText();
+        saveLoadController.SaveMainData();
     }
 
     public void SetMoney (int value) {
@@ -50,6 +54,7 @@ public class MainGameController : MonoBehaviour {
             currentMoney = 0;
         }
         uiController.UpdateMoneyText();
+        saveLoadController.SaveMainData();
     }
 
     public void UpdateTime (bool isForceUpdate, DateTime lastSaveTime) {

@@ -99,6 +99,7 @@ public class FarmSlot : MonoBehaviour {
             isRotten = false;
         }
         UpdatePlant();
+        saveLoadController.SaveFarmSlots();
     }
 
     public void HarvestPlant () {
@@ -114,6 +115,7 @@ public class FarmSlot : MonoBehaviour {
         currentDayPass = 0;
         isRotten = false;
         UpdatePlant();
+        saveLoadController.SaveFarmSlots();
     }
 
     public void PlantGrowth (int dayPass) {
@@ -155,7 +157,5 @@ public class FarmSlot : MonoBehaviour {
             plantImage.sprite = null;
             plantImage.color = dontHasPlantColor;
         }
-
-        saveLoadController = GameObject.FindObjectOfType<SaveLoadController>();
     }
 }

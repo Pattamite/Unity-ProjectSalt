@@ -39,10 +39,11 @@ public class SaveLoadController : MonoBehaviour {
         LoadFarmData();
     }
 
-    private void SaveFarmSlots () {
+    public void SaveFarmSlots () {
         List<FarmSlotSave> farmSlotSaves = new List<FarmSlotSave>();
         int subFarmIndex = 0;
         int farmSlotIndex = 0;
+        //print(farm);
         foreach (Transform child in farm.transform) {
             farmSlotIndex = 0;
             if (child.gameObject.GetComponent<SubFarm>()) {
@@ -72,7 +73,7 @@ public class SaveLoadController : MonoBehaviour {
         file.Close();
     }
 
-    private void SaveMainData () {
+    public void SaveMainData () {
         DateTime currentTime = DateTime.Now;
         MainDataSave mainDataSave = new MainDataSave();
         mainDataSave.currentMoney = mainGameController.currentMoney;
@@ -88,7 +89,7 @@ public class SaveLoadController : MonoBehaviour {
         file.Close();
     }
 
-    private void SaveFarmData () {
+    public void SaveFarmData () {
         FarmSave farmSave = new FarmSave();
         farmSave.playerSubFarmCount = farm.playerSubFarmCount;
 
@@ -98,7 +99,7 @@ public class SaveLoadController : MonoBehaviour {
         file.Close();
     }
 
-    private void LoadFarmSlots () {
+    public void LoadFarmSlots () {
         if (File.Exists(Application.persistentDataPath + PATH_FARM_SLOTS)) {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + PATH_FARM_SLOTS, FileMode.Open);
@@ -144,15 +145,15 @@ public class SaveLoadController : MonoBehaviour {
         }
     }
 
-    private void LoadMainData () {
+    public void LoadMainData () {
         if (File.Exists(Application.persistentDataPath + PATH_MAIN_DATA)) {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + PATH_MAIN_DATA, FileMode.Open);
             MainDataSave mainDataSave = (MainDataSave)bf.Deserialize(file);
             file.Close();
-            /*Debug.Log(string.Format("MainData : Money {0}, {1}:{2} {3}/{4}/{5}",
+            Debug.Log(string.Format("MainData : Money {0}, {1}:{2} {3}/{4}/{5}",
                 mainDataSave.currentMoney, mainDataSave.hour, mainDataSave.minute,
-                mainDataSave.day, mainDataSave.month, mainDataSave.year));*/
+                mainDataSave.day, mainDataSave.month, mainDataSave.year));
 
             mainGameController.SetMoney(mainDataSave.currentMoney);
             mainGameController.UpdateTime(true, new DateTime(mainDataSave.year, mainDataSave.month,
@@ -164,7 +165,7 @@ public class SaveLoadController : MonoBehaviour {
         }
     }
 
-    private void LoadFarmData () {
+    public void LoadFarmData () {
         if (File.Exists(Application.persistentDataPath + PATH_FARM_DATA)) {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + PATH_FARM_DATA, FileMode.Open);

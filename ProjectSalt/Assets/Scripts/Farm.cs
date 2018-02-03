@@ -77,6 +77,7 @@ public class Farm : MonoBehaviour {
                 miniFarm.gameObject.GetComponent<SubFarm>().NextDay(dayPass);
             }
         }
+        saveLoadController.SaveFarmSlots();
     }
 
     public void LeftButtonClick () {
@@ -142,7 +143,7 @@ public class Farm : MonoBehaviour {
     private void AddSubFarm () {
         playerSubFarmCount += 1;
         CheckLeftRightButton();
-        saveLoadController.SaveGame();
+        saveLoadController.SaveFarmData();
     }
 
     public void SetPlayerSubFarmCount (int value) {

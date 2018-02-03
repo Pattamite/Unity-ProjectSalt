@@ -14,8 +14,11 @@ public class SubFarm : MonoBehaviour {
 	}
 
     public void NextDay (int dayPass) {
-        foreach(Transform farmSlot in transform) {
-            farmSlot.gameObject.GetComponent<FarmSlot>().PlantGrowth(dayPass);
+        foreach(Transform currentObject in transform) {
+            FarmSlot farmSlot = currentObject.gameObject.GetComponent<FarmSlot>();
+            if (farmSlot) {
+                farmSlot.PlantGrowth(dayPass);
+            }
         }
     }
 }
