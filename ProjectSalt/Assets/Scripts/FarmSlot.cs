@@ -90,7 +90,7 @@ public class FarmSlot : MonoBehaviour {
             mainGameController.ReduceMoney(plant.buyPrice);
             AddPlant(plant);
             audioSource.clip = plantSound;
-            audioSource.Play();
+            if (AudioController.IsAudioEnable()) audioSource.Play();
         }
         else {
             Debug.LogWarning("Not Enough Money.");
@@ -119,7 +119,7 @@ public class FarmSlot : MonoBehaviour {
         }
 
         audioSource.clip = harvestSound;
-        audioSource.Play();
+        if (AudioController.IsAudioEnable()) audioSource.Play();
     }
 
     public void RemovePlant (bool isPlaySound) {
@@ -132,7 +132,7 @@ public class FarmSlot : MonoBehaviour {
 
         if (isPlaySound) {
             audioSource.clip = removeSound;
-            audioSource.Play();
+            if(AudioController.IsAudioEnable()) audioSource.Play();
         }
     }
 
