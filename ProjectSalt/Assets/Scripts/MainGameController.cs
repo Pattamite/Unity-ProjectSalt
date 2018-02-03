@@ -7,11 +7,13 @@ public class MainGameController : MonoBehaviour {
 
     public int currentMoney { get; private set; }
     public int newDayHour = 6;
+    public bool isLoadFinish = false;
 
     private DateTime lastUpdateTime;
     private Farm farm;
     private bool isTodayGrowth;
     private UIController uiController;
+    private DateTime temp;
 
 	// Use this for initialization
 	void Start () {
@@ -19,20 +21,22 @@ public class MainGameController : MonoBehaviour {
         uiController = GameObject.FindObjectOfType<UIController>();
         isTodayGrowth = false;
         currentMoney = 100;
+        temp = DateTime.Now;
+
         uiController.UpdateMoneyText();
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        UpdateTime(false, temp);
+    }
 
-    public void addMoney (int value) {
+    public void AddMoney (int value) {
         currentMoney += value;
         uiController.UpdateMoneyText();
     }
 
-    public void reduceMoney (int value) {
+    public void ReduceMoney (int value) {
         currentMoney -= value;
         if(currentMoney < 0) {
             currentMoney = 0;
@@ -40,7 +44,26 @@ public class MainGameController : MonoBehaviour {
         uiController.UpdateMoneyText();
     }
 
-    private void UpdateTime () {
-        DateTime currentTime = DateTime.Now;
+    private void UpdateTime (bool isForceUpdate, DateTime lastSaveTime) {
+        if (isLoadFinish || isForceUpdate) {
+            if (isForceUpdate) {
+                lastUpdateTime = lastSaveTime;
+                isLoadFinish = true;
+            }
+
+            DateTime currentTime = DateTime.Now;
+
+            int growthTime = (currentTime - lastUpdateTime).Days;
+
+            if ((lastUpdateTime.Hour < newDayHour || lastUpdateTime.Day != currentTime.Day) && currentTime.Hour >= newDayHour) {
+                growthTime++;
+            }
+
+            if(growthTime > 0) {
+                farm.NextDay(growthTime);
+            }
+
+            lastUpdateTime = currentTime;
+        }
     }
 }

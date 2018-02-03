@@ -7,16 +7,14 @@ public class FarmSlot : MonoBehaviour {
 
     static private Color hasPlantColor = Color.white;
     static private Color dontHasPlantColor = new Color(0, 0, 0, 0);
-    private bool isRotten;
-    private int currentState = 0;
-    private int currentDayPass = 0;
-    private PlantButtonsController plantButtonsController;
-    private ToolsButtonController toolsButtonController;
+    public bool isRotten { get; private set; }
+    public int currentState { get; private set; }
+    public int currentDayPass { get; private set; }
     private MainGameController mainGameController;
     private Text text;
     private string plantImageName = "PlantImage";
     private Image plantImage;
-    private PlantModel plantModel;
+    public PlantModel plantModel { get; private set; }
 
     // Use this for initialization
     void Awake () {
@@ -29,8 +27,6 @@ public class FarmSlot : MonoBehaviour {
     }
 
     void Start () {
-        plantButtonsController = GameObject.FindObjectOfType<PlantButtonsController>();
-        toolsButtonController = GameObject.FindObjectOfType<ToolsButtonController>();
         mainGameController = GameObject.FindObjectOfType<MainGameController>();
         text = GetComponentInChildren<Text>();
         UpdatePlant();
@@ -38,6 +34,10 @@ public class FarmSlot : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+
+    }
+
+    public void SetPlantFromSave (int plantModelID, bool isRotten, int currentState, int currentDayPass){
 
     }
 
@@ -65,7 +65,7 @@ public class FarmSlot : MonoBehaviour {
 
     public void BuyPlant (PlantModel plant) {
         if(mainGameController.currentMoney >= plant.buyPrice) {
-            mainGameController.reduceMoney(plant.buyPrice);
+            mainGameController.ReduceMoney(plant.buyPrice);
             AddPlant(plant);
         }
         else {
@@ -89,7 +89,7 @@ public class FarmSlot : MonoBehaviour {
 
     public void HarvestPlant () {
         if (currentState == (plantModel.stateCount - 1) && !isRotten) {
-            mainGameController.addMoney(plantModel.GetSellPrice());
+            mainGameController.AddMoney(plantModel.GetSellPrice());
             RemovePlant();
         }
     }
