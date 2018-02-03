@@ -22709,7 +22709,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -61295,11 +61295,6 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 941900390}
-    - target: {fileID: 114337954543194228, guid: f1a724615379a0f47ae3d46ce64eb5db,
-        type: 2}
-      propertyPath: daysToNextState.Array.data[3]
-      value: 99999
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f1a724615379a0f47ae3d46ce64eb5db, type: 2}
   m_IsPrefabParent: 0

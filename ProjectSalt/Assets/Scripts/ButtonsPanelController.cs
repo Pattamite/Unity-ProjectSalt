@@ -16,7 +16,7 @@ public class ButtonsPanelController : MonoBehaviour {
     public GameObject[] buttonObjects;
     [Header("Active Button position")]
     public int buttonOnPanelCount;
-    private Vector2[] buttonOnPanelPositions = new Vector2[1];
+    private Vector2[] buttonOnPanelPositions = new Vector2[10];
     [Header("Left Right")]
     public Button leftButton;
     public Button rightButton;
@@ -150,6 +150,7 @@ public class ButtonsPanelController : MonoBehaviour {
     }
 
     private void CheckLeftRightButton () {
+        //print(gameObject.ToString() + " / " + firstButtonIndexInPanel.ToString());
         if (firstButtonIndexInPanel <= 0) {
             leftButton.interactable = false;
         }

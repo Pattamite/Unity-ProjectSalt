@@ -19,8 +19,12 @@ public class PlantModel : MonoBehaviour {
     public int sellPrice;
     public int sellPriceRandomRange;
 
+    
     private string plantImageName = "PlantButtonImage";
+    private string plantTextName = "PriceText";
     private Image plantImage;
+    private Text priceText;
+    private MainGameController mainGameController;
 
     void Awake () {
         if(transform.Find(plantImageName)) {
@@ -29,6 +33,13 @@ public class PlantModel : MonoBehaviour {
         }
         else {
             Debug.LogWarning("PlantModel.Awake : Child '" + plantImageName + "' not found");
+        }
+
+        if (transform.Find(plantTextName)) {
+            priceText = transform.Find(plantTextName).GetComponent<Text>();
+        }
+        else {
+            Debug.LogWarning("PlantModel.Awake : Child '" + plantTextName + "' not found");
         }
     }
 
@@ -53,11 +64,21 @@ public class PlantModel : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
-	}
+        mainGameController = GameObject.FindObjectOfType<MainGameController>();
+        priceText.text = buyPrice.ToString();
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		
+        CheckPriceText();
 	}
+
+    private void CheckPriceText () {
+        if (mainGameController.currentMoney >= buyPrice) {
+            priceText.color = Color.black;
+        }
+        else {
+            priceText.color = Color.red;
+        }
+    }
 }

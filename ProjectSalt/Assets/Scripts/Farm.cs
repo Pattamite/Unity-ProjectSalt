@@ -89,7 +89,7 @@ public class Farm : MonoBehaviour {
     }
 
     public void SetSubFarmActive (int value) {
-        print("set" + value);
+        //print("set" + value);
         if(value < subfarmCount && value >= 0) {
             subFarms[currentActiveSubFarmIndex].gameObject.GetComponent<RectTransform>().anchoredPosition = notActivePosition;
 

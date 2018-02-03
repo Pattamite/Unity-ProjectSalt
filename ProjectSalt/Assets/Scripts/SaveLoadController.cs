@@ -151,9 +151,9 @@ public class SaveLoadController : MonoBehaviour {
             FileStream file = File.Open(Application.persistentDataPath + PATH_MAIN_DATA, FileMode.Open);
             MainDataSave mainDataSave = (MainDataSave)bf.Deserialize(file);
             file.Close();
-            Debug.Log(string.Format("MainData : Money {0}, {1}:{2} {3}/{4}/{5}",
+            /*Debug.Log(string.Format("MainData : Money {0}, {1}:{2} {3}/{4}/{5}",
                 mainDataSave.currentMoney, mainDataSave.hour, mainDataSave.minute,
-                mainDataSave.day, mainDataSave.month, mainDataSave.year));
+                mainDataSave.day, mainDataSave.month, mainDataSave.year));*/
 
             mainGameController.SetMoney(mainDataSave.currentMoney);
             mainGameController.UpdateTime(true, new DateTime(mainDataSave.year, mainDataSave.month,
@@ -172,7 +172,7 @@ public class SaveLoadController : MonoBehaviour {
             FarmSave farmSave = (FarmSave)bf.Deserialize(file);
             file.Close();
 
-            print(farmSave.playerSubFarmCount);
+            //print(farmSave.playerSubFarmCount);
             farm.SetPlayerSubFarmCount(farmSave.playerSubFarmCount);
         }
         else {
