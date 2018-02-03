@@ -9,6 +9,7 @@ public class SaveLoadController : MonoBehaviour {
 
     private static string PATH_FARM_SLOTS = "/pfs.gd";
     private static string PATH_MAIN_DATA = "/pmd.gd";
+    private static string PATH_FARM_DATA = "/pfd.gd";
 
     private Farm farm;
     private MainGameController mainGameController;
@@ -29,11 +30,13 @@ public class SaveLoadController : MonoBehaviour {
     public void SaveGame () {
         SaveFarmSlots();
         SaveMainData();
+        SaveFarmData();
     }
 
     public void LoadGame () {
         LoadFarmSlots();
         LoadMainData();
+        LoadFarmData();
     }
 
     private void SaveFarmSlots () {
@@ -82,6 +85,16 @@ public class SaveLoadController : MonoBehaviour {
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + PATH_MAIN_DATA);
         bf.Serialize(file, mainDataSave);
+        file.Close();
+    }
+
+    private void SaveFarmData () {
+        FarmSave farmSave = new FarmSave();
+        farmSave.playerSubFarmCount = farm.playerSubFarmCount;
+
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + PATH_FARM_DATA);
+        bf.Serialize(file, farmSave);
         file.Close();
     }
 
@@ -148,6 +161,20 @@ public class SaveLoadController : MonoBehaviour {
         else {
             //Debug.LogWarning("SaveLoadController.LoadMainData : " + Application.persistentDataPath + PATH_MAIN_DATA + " not found.");
             mainGameController.UpdateTime(true, DateTime.Now);
+        }
+    }
+
+    private void LoadFarmData () {
+        if (File.Exists(Application.persistentDataPath + PATH_FARM_DATA)) {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + PATH_FARM_DATA, FileMode.Open);
+            FarmSave farmSave = (FarmSave)bf.Deserialize(file);
+            file.Close();
+
+            print(farmSave.playerSubFarmCount);
+            farm.SetPlayerSubFarmCount(farmSave.playerSubFarmCount);
+        }
+        else {
         }
     }
 }

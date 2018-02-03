@@ -20,10 +20,11 @@ public class ButtonsPanelController : MonoBehaviour {
     [Header("Left Right")]
     public Button leftButton;
     public Button rightButton;
+    
 
-    private static float buttonNotInPanelPosition = -500f;
+    private static float buttonNotInPanelPosition = -1000f;
     private static float activePosition = 69.4f;
-    private static float notActivePosition = -500f;
+    private static float notActivePosition = -1000f;
     private int firstButtonIndexInPanel = 0;
 
     private void OnValidate () {
@@ -41,7 +42,6 @@ public class ButtonsPanelController : MonoBehaviour {
         }
 
         SaveButtonOnPanelPositions();
-
         MoveButtonToPanel(0);
     }
 	
@@ -49,6 +49,8 @@ public class ButtonsPanelController : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    
 
     private void SaveButtonOnPanelPositions () {
         for(int i = 0; i < buttonOnPanelCount; i++) {

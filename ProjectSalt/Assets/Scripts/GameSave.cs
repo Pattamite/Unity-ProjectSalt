@@ -22,3 +22,8 @@ public class MainDataSave {
     public int hour;
     public int minute;
 }
+
+[System.Serializable]
+public class FarmSave {
+    public int playerSubFarmCount;
+}
