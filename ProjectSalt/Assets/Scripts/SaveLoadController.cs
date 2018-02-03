@@ -131,7 +131,7 @@ public class SaveLoadController : MonoBehaviour {
                                 iter++;
                             }
                             else {
-                                farmSlot.RemovePlant();
+                                farmSlot.RemovePlant(false);
                             }
                             farmSlotIndex++;
                         }

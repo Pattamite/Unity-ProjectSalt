@@ -7,6 +7,12 @@ public class FarmSlot : MonoBehaviour {
 
     static private Color hasPlantColor = Color.white;
     static private Color dontHasPlantColor = new Color(0, 0, 0, 0);
+
+    public AudioClip plantSound;
+    public AudioClip harvestSound;
+    public AudioClip removeSound;
+
+
     public bool isRotten { get; private set; }
     public int currentState { get; private set; }
     public int currentDayPass { get; private set; }
@@ -16,6 +22,7 @@ public class FarmSlot : MonoBehaviour {
     public PlantModel plantModel { get; private set; }
     private static GameObject plantPanel;
     private static SaveLoadController saveLoadController;
+    private AudioSource audioSource;
 
     // Use this for initialization
     void Awake () {
@@ -27,6 +34,7 @@ public class FarmSlot : MonoBehaviour {
         }
         plantPanel = GameObject.Find("Plant Panel");
         saveLoadController = GameObject.FindObjectOfType<SaveLoadController>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Start () {
@@ -67,7 +75,7 @@ public class FarmSlot : MonoBehaviour {
 
     private void Command (string command) {
         if (command == ToolsButtonController.COMMAND_REMOVE) {
-            RemovePlant();
+            RemovePlant(true);
         }
         else if (command == ToolsButtonController.COMMAND_HARVEST) {
             HarvestPlant();
@@ -81,6 +89,8 @@ public class FarmSlot : MonoBehaviour {
         if(mainGameController.currentMoney >= plant.buyPrice) {
             mainGameController.ReduceMoney(plant.buyPrice);
             AddPlant(plant);
+            audioSource.clip = plantSound;
+            audioSource.Play();
         }
         else {
             Debug.LogWarning("Not Enough Money.");
@@ -105,17 +115,25 @@ public class FarmSlot : MonoBehaviour {
     public void HarvestPlant () {
         if (currentState == (plantModel.stateCount - 1) && !isRotten) {
             mainGameController.AddMoney(plantModel.GetSellPrice());
-            RemovePlant();
+            RemovePlant(false);
         }
+
+        audioSource.clip = harvestSound;
+        audioSource.Play();
     }
 
-    public void RemovePlant () {
+    public void RemovePlant (bool isPlaySound) {
         plantModel = null;
         currentState = 0;
         currentDayPass = 0;
         isRotten = false;
         UpdatePlant();
         saveLoadController.SaveFarmSlots();
+
+        if (isPlaySound) {
+            audioSource.clip = removeSound;
+            audioSource.Play();
+        }
     }
 
     public void PlantGrowth (int dayPass) {
