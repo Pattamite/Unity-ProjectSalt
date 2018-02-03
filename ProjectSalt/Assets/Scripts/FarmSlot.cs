@@ -12,6 +12,10 @@ public class FarmSlot : MonoBehaviour {
     public AudioClip harvestSound;
     public AudioClip removeSound;
 
+    public Image buttonImage;
+    public Color normalColor;
+    public Color harvestColor;
+
 
     public bool isRotten { get; private set; }
     public int currentState { get; private set; }
@@ -162,6 +166,13 @@ public class FarmSlot : MonoBehaviour {
                     plantImage.sprite = plantModel.stateImage[currentState];
                 }
 
+                if (currentState == (plantModel.stateCount - 1)) {
+                    buttonImage.color = harvestColor;
+                }
+                else {
+                    buttonImage.color = normalColor;
+                }
+
             }
             else {
                 plantImage.sprite = plantModel.rottenImage;
@@ -174,6 +185,7 @@ public class FarmSlot : MonoBehaviour {
             //text.text = " "; //for testing Only
             plantImage.sprite = null;
             plantImage.color = dontHasPlantColor;
+            buttonImage.color = normalColor;
         }
     }
 }

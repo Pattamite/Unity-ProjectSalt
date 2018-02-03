@@ -157,6 +157,9 @@ MonoBehaviour:
   plantSound: {fileID: 8300000, guid: a8e91407c302ac34fae2ec452d2650b3, type: 3}
   harvestSound: {fileID: 8300000, guid: 5b4a7c9f9f49c2b499e18d5d1166638c, type: 3}
   removeSound: {fileID: 8300000, guid: a8e91407c302ac34fae2ec452d2650b3, type: 3}
+  buttonImage: {fileID: 0}
+  normalColor: {r: 1, g: 1, b: 1, a: 0.101960786}
+  harvestColor: {r: 0.15862082, g: 1, b: 0, a: 0.101960786}
 --- !u!114 &114851183071834916
 MonoBehaviour:
   m_ObjectHideFlags: 1
