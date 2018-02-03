@@ -18,9 +18,8 @@ public class SaveLoadController : MonoBehaviour {
         farm = GameObject.FindObjectOfType<Farm>();
         mainGameController = GameObject.FindObjectOfType<MainGameController>();
 
+        LoadGame();
     }
-
-
 
     // Update is called once per frame
     void Update () {
@@ -98,12 +97,12 @@ public class SaveLoadController : MonoBehaviour {
             int subFarmIndex = 0;
             int farmSlotSavesCount = farmSlotSaves.Count;
 
-            foreach (FarmSlotSave farmSlot in farmSlotSaves) {
+            /*foreach (FarmSlotSave farmSlot in farmSlotSaves) {
                 Debug.Log(string.Format("FarmSlot : SubFarm #{0}, FarmSlot #{1}, PlantModelID #{2}," +
                     " IsRotten? {3}, CurrentState {4}, CurrentDayPass {5}",
                     farmSlot.subFarmIndex, farmSlot.farmSlotIndex, farmSlot.plantModelID,
                     farmSlot.isRotten, farmSlot.currentState, farmSlot.currentDayPass));
-            }
+            }*/
 
             foreach (Transform child in farm.transform) {
                 farmSlotIndex = 0;
@@ -128,7 +127,7 @@ public class SaveLoadController : MonoBehaviour {
             }
         }
         else {
-            Debug.LogWarning("SaveLoadController.LoadFarmSlot : " + Application.persistentDataPath + PATH_FARM_SLOTS + " not found.");
+            //Debug.LogWarning("SaveLoadController.LoadFarmSlot : " + Application.persistentDataPath + PATH_FARM_SLOTS + " not found.");
         }
     }
 
@@ -147,7 +146,7 @@ public class SaveLoadController : MonoBehaviour {
                 mainDataSave.day, mainDataSave.hour, mainDataSave.minute, 0));
         }
         else {
-            Debug.LogWarning("SaveLoadController.LoadMainData : " + Application.persistentDataPath + PATH_MAIN_DATA + " not found.");
+            //Debug.LogWarning("SaveLoadController.LoadMainData : " + Application.persistentDataPath + PATH_MAIN_DATA + " not found.");
             mainGameController.UpdateTime(true, DateTime.Now);
         }
     }

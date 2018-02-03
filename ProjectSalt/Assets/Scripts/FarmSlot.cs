@@ -11,11 +11,11 @@ public class FarmSlot : MonoBehaviour {
     public int currentState { get; private set; }
     public int currentDayPass { get; private set; }
     private MainGameController mainGameController;
-    private Text text;
     private string plantImageName = "PlantImage";
     private Image plantImage;
     public PlantModel plantModel { get; private set; }
     private static GameObject plantPanel;
+    private static SaveLoadController saveLoadController;
 
     // Use this for initialization
     void Awake () {
@@ -26,11 +26,11 @@ public class FarmSlot : MonoBehaviour {
             Debug.LogWarning("FarmSlot.Awake : Child '" + plantImageName + "' not found");
         }
         plantPanel = GameObject.Find("Plant Panel");
+        saveLoadController = GameObject.FindObjectOfType<SaveLoadController>();
     }
 
     void Start () {
         mainGameController = GameObject.FindObjectOfType<MainGameController>();
-        text = GetComponentInChildren<Text>();
         UpdatePlant();
     }
 
@@ -57,7 +57,6 @@ public class FarmSlot : MonoBehaviour {
     }
 
     public void OnClick () {
-
         if (PlantButtonsController.GetPlantModel()) {
             BuyPlant(PlantButtonsController.GetPlantModel());
         }
@@ -149,12 +148,14 @@ public class FarmSlot : MonoBehaviour {
             }
 
             plantImage.color = hasPlantColor;
-            text.text = currentDayPass.ToString(); //for testing Only
+            //text.text = currentDayPass.ToString(); //for testing Only
         }
         else {
-            text.text = " "; //for testing Only
+            //text.text = " "; //for testing Only
             plantImage.sprite = null;
             plantImage.color = dontHasPlantColor;
         }
+
+        saveLoadController = GameObject.FindObjectOfType<SaveLoadController>();
     }
 }
