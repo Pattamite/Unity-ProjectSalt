@@ -693,6 +693,11 @@ Prefab:
       propertyPath: m_Name
       value: PlantButton (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 114337954543194228, guid: f1a724615379a0f47ae3d46ce64eb5db,
+        type: 2}
+      propertyPath: id
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f1a724615379a0f47ae3d46ce64eb5db, type: 2}
   m_IsPrefabParent: 0
@@ -2493,6 +2498,11 @@ Prefab:
       propertyPath: m_Name
       value: PlantButton (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 114337954543194228, guid: f1a724615379a0f47ae3d46ce64eb5db,
+        type: 2}
+      propertyPath: id
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f1a724615379a0f47ae3d46ce64eb5db, type: 2}
   m_IsPrefabParent: 0
@@ -2720,6 +2730,11 @@ Prefab:
     - target: {fileID: 1174086847233162, guid: f1a724615379a0f47ae3d46ce64eb5db, type: 2}
       propertyPath: m_Name
       value: PlantButton (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114337954543194228, guid: f1a724615379a0f47ae3d46ce64eb5db,
+        type: 2}
+      propertyPath: id
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f1a724615379a0f47ae3d46ce64eb5db, type: 2}

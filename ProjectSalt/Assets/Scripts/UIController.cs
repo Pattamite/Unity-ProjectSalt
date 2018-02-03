@@ -29,7 +29,6 @@ public class UIController : MonoBehaviour {
     }
 
     public void UpdateMoneyText () {
-        print(mainGameController.currentMoney);
         currentMoneyText.text = mainGameController.currentMoney.ToString();
     }
 }

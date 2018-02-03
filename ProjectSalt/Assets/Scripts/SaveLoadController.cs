@@ -93,11 +93,38 @@ public class SaveLoadController : MonoBehaviour {
             List<FarmSlotSave> farmSlotSaves = (List<FarmSlotSave>)bf.Deserialize(file);
             file.Close();
 
-            foreach(FarmSlotSave farmSlot in farmSlotSaves) {
+            int iter = 0;
+            int farmSlotIndex = 0;
+            int subFarmIndex = 0;
+            int farmSlotSavesCount = farmSlotSaves.Count;
+
+            foreach (FarmSlotSave farmSlot in farmSlotSaves) {
                 Debug.Log(string.Format("FarmSlot : SubFarm #{0}, FarmSlot #{1}, PlantModelID #{2}," +
                     " IsRotten? {3}, CurrentState {4}, CurrentDayPass {5}",
                     farmSlot.subFarmIndex, farmSlot.farmSlotIndex, farmSlot.plantModelID,
                     farmSlot.isRotten, farmSlot.currentState, farmSlot.currentDayPass));
+            }
+
+            foreach (Transform child in farm.transform) {
+                farmSlotIndex = 0;
+                if (child.gameObject.GetComponent<SubFarm>()) {
+                    foreach (Transform grandChild in child.gameObject.transform) {
+                        FarmSlot farmSlot = grandChild.gameObject.GetComponent<FarmSlot>();
+                        if (farmSlot) {
+                            if (iter < farmSlotSavesCount && farmSlotSaves[iter].farmSlotIndex == farmSlotIndex 
+                                && farmSlotSaves[iter].subFarmIndex == subFarmIndex) {
+                                farmSlot.SetPlantFromSave(farmSlotSaves[iter].plantModelID, farmSlotSaves[iter].isRotten,
+                                    farmSlotSaves[iter].currentState, farmSlotSaves[iter].currentDayPass);
+                                iter++;
+                            }
+                            else {
+                                farmSlot.RemovePlant();
+                            }
+                            farmSlotIndex++;
+                        }
+                    }
+                    subFarmIndex++;
+                }
             }
         }
         else {
@@ -111,12 +138,17 @@ public class SaveLoadController : MonoBehaviour {
             FileStream file = File.Open(Application.persistentDataPath + PATH_MAIN_DATA, FileMode.Open);
             MainDataSave mainDataSave = (MainDataSave)bf.Deserialize(file);
             file.Close();
-            Debug.Log(string.Format("MainData : Money {0}, {1}:{2} {3}/{4}/{5}",
+            /*Debug.Log(string.Format("MainData : Money {0}, {1}:{2} {3}/{4}/{5}",
                 mainDataSave.currentMoney, mainDataSave.hour, mainDataSave.minute,
-                mainDataSave.day, mainDataSave.minute, mainDataSave.year));
+                mainDataSave.day, mainDataSave.month, mainDataSave.year));*/
+
+            mainGameController.SetMoney(mainDataSave.currentMoney);
+            mainGameController.UpdateTime(true, new DateTime(mainDataSave.year, mainDataSave.month,
+                mainDataSave.day, mainDataSave.hour, mainDataSave.minute, 0));
         }
         else {
             Debug.LogWarning("SaveLoadController.LoadMainData : " + Application.persistentDataPath + PATH_MAIN_DATA + " not found.");
+            mainGameController.UpdateTime(true, DateTime.Now);
         }
     }
 }

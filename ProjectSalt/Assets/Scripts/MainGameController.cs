@@ -44,7 +44,15 @@ public class MainGameController : MonoBehaviour {
         uiController.UpdateMoneyText();
     }
 
-    private void UpdateTime (bool isForceUpdate, DateTime lastSaveTime) {
+    public void SetMoney (int value) {
+        currentMoney = value;
+        if (currentMoney < 0) {
+            currentMoney = 0;
+        }
+        uiController.UpdateMoneyText();
+    }
+
+    public void UpdateTime (bool isForceUpdate, DateTime lastSaveTime) {
         if (isLoadFinish || isForceUpdate) {
             if (isForceUpdate) {
                 lastUpdateTime = lastSaveTime;

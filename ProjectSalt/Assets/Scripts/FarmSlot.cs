@@ -15,6 +15,7 @@ public class FarmSlot : MonoBehaviour {
     private string plantImageName = "PlantImage";
     private Image plantImage;
     public PlantModel plantModel { get; private set; }
+    private static GameObject plantPanel;
 
     // Use this for initialization
     void Awake () {
@@ -24,6 +25,7 @@ public class FarmSlot : MonoBehaviour {
         else {
             Debug.LogWarning("FarmSlot.Awake : Child '" + plantImageName + "' not found");
         }
+        plantPanel = GameObject.Find("Plant Panel");
     }
 
     void Start () {
@@ -38,7 +40,20 @@ public class FarmSlot : MonoBehaviour {
     }
 
     public void SetPlantFromSave (int plantModelID, bool isRotten, int currentState, int currentDayPass){
+        foreach(Transform child in plantPanel.transform) {
+            PlantModel plant = child.gameObject.GetComponent<PlantModel>();
+            if (plant) {
+                if(plant.id == plantModelID) {
+                    this.plantModel = plant;
+                    break;
+                }
+            }
+        }
 
+        this.isRotten = isRotten;
+        this.currentState = currentState;
+        this.currentDayPass = currentDayPass;
+        UpdatePlant();
     }
 
     public void OnClick () {
@@ -95,7 +110,6 @@ public class FarmSlot : MonoBehaviour {
     }
 
     public void RemovePlant () {
-        print("remove");
         plantModel = null;
         currentState = 0;
         currentDayPass = 0;
