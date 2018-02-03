@@ -22,7 +22,7 @@ public class MainGameController : MonoBehaviour {
         uiController = GameObject.FindObjectOfType<UIController>();
         saveLoadController = GameObject.FindObjectOfType<SaveLoadController>();
         isTodayGrowth = false;
-        currentMoney = 100;
+        currentMoney = 0;
         temp = DateTime.Now;
 
         uiController.UpdateMoneyText();
