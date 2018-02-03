@@ -19,10 +19,12 @@ public class AudioController : MonoBehaviour {
     private AudioSource audioSource;
 
     public static bool IsAudioEnable () {
+        if (!PlayerPrefs.HasKey(IS_AUDIO_ENABLE)) return true;
         return PlayerPrefs.GetInt(IS_AUDIO_ENABLE) == 1;
     }
 
     public static bool IsMusicEnable () {
+        if (!PlayerPrefs.HasKey(IS_MUSIC_ENABLE)) return true;
         return PlayerPrefs.GetInt(IS_MUSIC_ENABLE) == 1;
     }
 
